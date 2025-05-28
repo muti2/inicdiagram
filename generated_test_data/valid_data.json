@@ -1,0 +1,12 @@
+[
+  {"timestamp": "2024-01-01T00:00:00.000Z", "value": 100.0, "unit": "kWh"},
+  {"timestamp": "2024-01-01T00:15:00.000Z", "value": 101.5, "unit": "kWh"},
+  {"timestamp": "2024-01-01T00:30:00.000Z", "value": 102.3, "unit": "kWh"},
+  {"timestamp": "2024-01-01T00:45:00.000Z", "value": 100.8, "unit": "kWh"},
+  {"timestamp": "2024-01-01T01:00:00.000Z", "value": 99.5, "unit": "kWh"},
+  {"timestamp": "2024-01-01T01:15:00.000Z", "value": 98.7, "unit": "kWh"},
+  {"timestamp": "2024-01-01T01:30:00.000Z", "value": 100.1, "unit": "kWh"},
+  {"timestamp": "2024-01-01T01:45:00.000Z", "value": 101.9, "unit": "kWh"},
+  {"timestamp": "2024-01-01T02:00:00.000Z", "value": 103.5, "unit": "kWh"},
+  {"timestamp": "2024-01-01T02:15:00.000Z", "value": 105.2, "unit": "kWh"}
+]

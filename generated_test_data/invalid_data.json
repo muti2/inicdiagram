@@ -1,0 +1,11 @@
+[
+  {"timestamp": "2024-02-01T00:00:00.000Z", "value": "sto", "unit": "kWh"},
+  {"timestamp": "2024-02-01T00:15:00.000Z", "value": 101.5},
+  {"timestamp": "neplatny_cas", "value": 102.3, "unit": "kWh"},
+  {"time": "2024-02-01T00:45:00.000Z", "val": 100.8, "unit": "kWh"},
+  "toto neni objekt",
+  {"timestamp": "2024-02-01T01:00:00.000Z", "value": null, "unit": "kWh"},
+  {"timestamp": "2024-02-01T01:15:00.000Z", "value": 98.7, "unit": "kW"},
+  {"timestamp": "2024-02-01T01:15:00.000Z", "value": 99.0, "unit": "kWh"},
+  {"timestamp": "2099-01-01T00:00:00.000Z", "value": 100.0, "unit": "kWh"}
+]

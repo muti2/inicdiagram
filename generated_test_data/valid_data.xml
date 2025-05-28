@@ -1,0 +1,27 @@
+<records>
+  <record>
+    <timestamp>2024-03-01T00:00:00.000Z</timestamp>
+    <value>110.0</value>
+    <unit>kWh</unit>
+  </record>
+  <record>
+    <timestamp>2024-03-01T00:15:00.000Z</timestamp>
+    <value>111.5</value>
+    <unit>kWh</unit>
+  </record>
+  <record>
+    <timestamp>2024-03-01T00:30:00.000Z</timestamp>
+    <value>112.3</value>
+    <unit>kWh</unit>
+  </record>
+  <record>
+    <timestamp>2024-03-01T00:45:00.000Z</timestamp>
+    <value>110.8</value>
+    <unit>kWh</unit>
+  </record>
+  <record>
+    <timestamp>2024-03-01T01:00:00.000Z</timestamp>
+    <value>109.5</value>
+    <unit>kWh</unit>
+  </record>
+</records>
