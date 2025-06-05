@@ -1,9 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 import { validateData as validateDataFile, DataRecord as ValidatorDataRecord } from './utils/validateDataFile';
 import ExportPanel from './components/ExportPanel';
 import ChartsPanel from './components/ChartsPanelFixed';
+import Navigation from './components/Navigation';
 
 // --- Type Definitions ---
 
@@ -194,6 +195,9 @@ function App() {
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [exportMessage, setExportMessage] = useState<string>('');
   
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  
   // State for editing data rows
   const [editingRow, setEditingRow] = useState<number | null>(null);
   const [editFormData, setEditFormData] = useState<{timestamp: string, value: string, unit: string}>({timestamp: '', value: '', unit: ''});
@@ -201,16 +205,27 @@ function App() {
   // State for interpolation requirements check
   const [interpolationCheck, setInterpolationCheck] = useState<{canInterpolate: boolean, reason: string} | null>(null);
 
+  // Dark mode effect
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode) {
+      const isDarkMode = JSON.parse(savedDarkMode);
+      setDarkMode(isDarkMode);
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
 
-  // Navigation items
-  const navItems = [
-    { id: 'upload', label: 'Nahrání', icon: '📤' },
-    { id: 'validate', label: 'Validace', icon: '✓' },
-    { id: 'data', label: 'Data', icon: '📋' },
-    { id: 'analyze', label: 'Analýza', icon: '📊' },
-    { id: 'charts', label: 'Grafy', icon: '📈' },
-    { id: 'export', label: 'Export', icon: '💾' }
-  ];
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
 
   // Filtering logic
   const getFilteredData = (): DataRecord[] => {
@@ -1165,16 +1180,16 @@ function App() {
 
   // --- Render Component ---
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-6 font-sans">
-      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-6 font-sans">
+      <div className="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
         {/* Header */}
-        <div className="border-b border-gray-200 p-4 md:p-6 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <h1 className="text-2xl font-bold text-gray-800">Validátor iniciálních diagramů</h1>
-          <p className="text-gray-600 mt-1">Nástroj pro analýzu, validaci a opravu dat spotřeby</p>
+        <div className="border-b border-gray-200 dark:border-gray-700 p-4 md:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Validátor iniciálních diagramů</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Nástroj pro analýzu, validaci a opravu dat spotřeby</p>
           {fileInfo && (
-            <div className="mt-4 p-3 bg-blue-100 text-blue-800 rounded-lg text-sm border border-blue-200">
+            <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg text-sm border border-blue-200 dark:border-blue-800">
               <p className="font-medium">Načtený soubor: <span className="font-semibold">{fileInfo.name}</span></p>
-              <p className="text-xs text-blue-700 mt-0.5">
+              <p className="text-xs text-blue-700 dark:text-blue-300 mt-0.5">
                 Typ: {fileInfo.type} | Velikost: {fileInfo.size} KB | Posl. změna: {fileInfo.lastModified}
               </p>
             </div>
@@ -1182,56 +1197,44 @@ function App() {
         </div>
 
         {/* Navigation */}
-        <div className="p-2 md:p-3 border-b border-gray-200 bg-gray-50">
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
-            {navItems.map((item) => {
-              const isAvailable = item.id === 'upload' || fileInfo;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  className={`flex items-center px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ${isActive ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-gray-600 hover:bg-gray-200'} ${!isAvailable ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-                  onClick={() => isAvailable && goToTab(item.id)}
-                  disabled={!isAvailable}
-                  title={item.label}
-                >
-                  <span className="text-lg mr-1.5">{item.icon}</span>
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <Navigation
+          activeTab={activeTab}
+          setActiveTab={goToTab}
+          data={data}
+          setShowConfirm={setShowConfirm}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
 
         {/* Content Area */}
-        <div className="p-4 md:p-6">
+        <div className="p-4 md:p-6 dark:bg-gray-800">
           {/* Upload Tab */}
           {activeTab === 'upload' && (
              <div>
-              <h2 className="text-xl font-semibold mb-3 text-gray-700">1. Nahrání souboru</h2>
-              <p className="mb-4 text-sm text-gray-600">
+              <h2 className="text-xl font-semibold mb-3 text-gray-700 dark:text-gray-200">1. Nahrání souboru</h2>
+              <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                 Nahrajte soubor (CSV, XLSX, XLS, XML) obsahující časové značky a hodnoty spotřeby.
               </p>
               {errorMessage && (
-                  <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm">
+                  <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-700 text-sm">
                       <p className="font-semibold">Chyba:</p>
                       <p className="mt-1">{errorMessage}</p>
                   </div>
               )}
               <div className="mb-6">
-                <label className={`flex flex-col items-center justify-center w-full h-36 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${isLoading ? 'bg-gray-100 border-gray-300' : 'bg-gray-50 border-gray-300 hover:bg-indigo-50 hover:border-indigo-400'}`}>
+                <label className={`flex flex-col items-center justify-center w-full h-36 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${isLoading ? 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600' : 'bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500'}`}>
                   <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
-                    <svg className={`w-10 h-10 mb-3 ${isLoading ? 'text-gray-400' : 'text-indigo-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                    <p className="mb-1 text-sm text-gray-600 font-semibold">Klikněte nebo přetáhněte soubor</p>
-                    <p className="text-xs text-gray-500">CSV, XLSX, XLS, XML, JSON (max 50MB)</p>
+                    <svg className={`w-10 h-10 mb-3 ${isLoading ? 'text-gray-400 dark:text-gray-500' : 'text-indigo-500 dark:text-indigo-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <p className="mb-1 text-sm text-gray-600 dark:text-gray-300 font-semibold">Klikněte nebo přetáhněte soubor</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">CSV, XLSX, XLS, XML, JSON (max 50MB)</p>
                   </div>
                   <input id="file-upload-input" type="file" className="hidden" accept=".csv,.xlsx,.xls,.xml,.json,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,application/json" onChange={handleFileUpload} disabled={isLoading} />
                 </label>
               </div>
               {isLoading && (
                 <div className="flex items-center justify-center space-x-2 my-4">
-                   <svg className="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                   <span className="text-sm text-gray-600 font-medium">Zpracovávám soubor...</span>
+                   <svg className="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                   <span className="text-sm text-gray-600 dark:text-gray-300 font-medium">Zpracovávám soubor...</span>
                 </div>
               )}
             </div>
@@ -1240,33 +1243,33 @@ function App() {
           {/* Validation Tab */}
           {activeTab === 'validate' && (
              <div>
-              <h2 className="text-xl font-semibold mb-3 text-gray-700">2. Validace dat</h2>
-               {!validationResults && !errorMessage && <div className="text-center text-gray-500 py-10 px-4 border border-dashed rounded-lg">Nejprve nahrajte soubor pro validaci.</div>}
+              <h2 className="text-xl font-semibold mb-3 text-gray-700 dark:text-gray-200">2. Validace dat</h2>
+               {!validationResults && !errorMessage && <div className="text-center text-gray-500 dark:text-gray-400 py-10 px-4 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg">Nejprve nahrajte soubor pro validaci.</div>}
                {errorMessage && !validationResults && (
-                  <div className="p-4 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm">
+                  <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-700 text-sm">
                       <p className="font-semibold">Chyba:</p> <p className="mt-1">{errorMessage}</p> <p className="mt-2">Validaci nelze provést.</p>
                   </div>
                )}
               {validationResults && (
                 <>
-                  <div className={`p-4 rounded-lg mb-6 border text-sm ${validationResults.valid ? 'border-green-300 bg-green-50 text-green-900' : 'border-amber-400 bg-amber-50 text-amber-900'}`}>
-                    <p className={`font-semibold text-lg mb-2 ${validationResults.valid ? 'text-green-700' : 'text-amber-700'}`}>{validationResults.valid ? '✅ Data jsou validní' : '⚠️ Validace s výhradami'}</p>
+                  <div className={`p-4 rounded-lg mb-6 border text-sm ${validationResults.valid ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' : 'border-amber-400 dark:border-amber-600 bg-amber-50 dark:bg-amber-900/20 text-amber-900 dark:text-amber-300'}`}>
+                    <p className={`font-semibold text-lg mb-2 ${validationResults.valid ? 'text-green-700 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>{validationResults.valid ? '✅ Data jsou validní' : '⚠️ Validace s výhradami'}</p>
                     {validationResults.messages.length > 0 && ( <ul className="space-y-1 list-disc list-inside pl-1"> {validationResults.messages.map((msg, i) => (<li key={i}>{msg}</li>))} </ul> )}
                     {!validationResults.valid && (
                         <div className="mt-4 pt-3 border-t border-opacity-60 ${validationResults.valid ? 'border-green-200' : 'border-amber-300'}">
-                        <p className="font-medium"> Problémy můžete zkusit opravit v sekci <button onClick={() => setActiveTab('data')} className="text-blue-600 font-semibold hover:underline focus:outline-none">Data</button>. </p>
+                        <p className="font-medium"> Problémy můžete zkusit opravit v sekci <button onClick={() => setActiveTab('data')} className="text-blue-600 dark:text-blue-400 font-semibold hover:underline focus:outline-none">Data</button>. </p>
                         </div>
                     )}
                   </div>
-                  <h3 className="text-lg font-semibold mb-3 text-gray-700">Statistiky validace:</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Statistiky validace:</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                      {/* Stats Cards - Example: Total Records */}
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Záznamů v souboru</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{validationResults.stats.totalRecords}</p> </div>
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Záznamy s platným časem</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{validationResults.stats.validTimestamps}</p> {validationResults.stats.invalidTimestamps > 0 && <p className="text-xs text-red-600 mt-1">({validationResults.stats.invalidTimestamps} neplatných)</p>} </div>
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Chybějící záznamy (15min)</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.missingRecords > 0 ? 'text-amber-600' : 'text-green-600'}`}>{validationResults.stats.missingRecords}</p> <p className="text-xs text-gray-500 mt-1">Očekáváno v rozsahu: {validationResults.stats.expectedRecords}</p> </div>
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Duplicitní čas. značky</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.duplicateValues > 0 ? 'text-red-600' : 'text-green-600'}`}>{validationResults.stats.duplicateValues}</p> </div>
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Extrémní hodnoty ({'>'}3σ)</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.invalidValues > 0 ? 'text-red-600' : 'text-green-600'}`}>{validationResults.stats.invalidValues}</p> </div>
-                    <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Chybějící/Neplatné hodnoty</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.missingValues > 0 ? 'text-red-600' : 'text-green-600'}`}>{validationResults.stats.missingValues}</p> </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Záznamů v souboru</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{validationResults.stats.totalRecords}</p> </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Záznamy s platným časem</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{validationResults.stats.validTimestamps}</p> {validationResults.stats.invalidTimestamps > 0 && <p className="text-xs text-red-600 dark:text-red-400 mt-1">({validationResults.stats.invalidTimestamps} neplatných)</p>} </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Chybějící záznamy (15min)</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.missingRecords > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>{validationResults.stats.missingRecords}</p> <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Očekáváno v rozsahu: {validationResults.stats.expectedRecords}</p> </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Duplicitní čas. značky</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.duplicateValues > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{validationResults.stats.duplicateValues}</p> </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Extrémní hodnoty ({'>'}3σ)</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.invalidValues > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{validationResults.stats.invalidValues}</p> </div>
+                    <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Chybějící/Neplatné hodnoty</p> <p className={`text-2xl font-semibold mt-1 ${validationResults.stats.missingValues > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{validationResults.stats.missingValues}</p> </div>
                   </div>
                 </>
               )}
@@ -1303,7 +1306,7 @@ function App() {
       }
       setFixMissing(e.target.checked);
     }}
-    disabled={isRepairing || Boolean(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || (interpolationCheck && !interpolationCheck.canInterpolate)}
+    disabled={isRepairing || Boolean(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || Boolean(interpolationCheck && !interpolationCheck.canInterpolate)}
   />
   <label htmlFor="fix-missing" className={`text-sm ${(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || (interpolationCheck && !interpolationCheck.canInterpolate) ? 'text-gray-400' : 'text-gray-700'}`}>
     Doplnit chybějící záznamy (interpolací)

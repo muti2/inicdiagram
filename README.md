@@ -1,4 +1,25 @@
-# React + TypeScript + Vite
+# Validátor iniciálních diagramů
+
+Nástroj pro analýzu, validaci a opravu dat spotřeby energie vyvinutý pomocí React + TypeScript + Vite.
+
+## Funkce
+
+- **Nahrávání souborů**: Podpora CSV, XLSX, XLS, JSON, XML formátů
+- **Validace dat**: Kontrola integrity, duplicit a chybějících záznamů  
+- **Automatické opravy**: Interpolace, odstranění duplicit, oprava extrémních hodnot
+- **Vizualizace**: Interaktivní grafy pro analýzu dat
+- **Export**: Možnost exportu upravených dat
+- **Dark Mode**: Kompletní tmavý režim s přepínačem v navigaci
+
+## Dark Mode
+
+Aplikace podporuje tmavý režim s následujícími funkcemi:
+- **Přepínač v navigaci**: Ikony měsíce (🌙) a slunce (☀️) v pravém horním rohu
+- **Persistentní nastavení**: Volba se ukládá do localStorage
+- **Automatické načítání**: Obnovení posledního nastaveného režimu při spuštění
+- **Kompletní pokrytí**: Všechny komponenty podporují tmavý režim
+
+## Technologie
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
