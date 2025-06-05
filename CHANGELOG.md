@@ -1,5 +1,26 @@
 # Changelog
 
+## [Verze 0.4.0] - 2025-06-05
+
+### Přidáno
+- **Dark Mode**: Implementován kompletní tmavý režim pro celou aplikaci
+- **Přepínač tema**: Přepínač mezi světlým a tmavým režimem v pravém horním rohu navigace
+- **Persistentní nastavení**: Dark mode se ukládá do localStorage a zachovává se mezi relacemi
+- **Responzivní ikony**: Ikony měsíce (🌙) a slunce (☀️) pro intuitivní přepínání režimů
+- **Komplexní styly**: Dark mode styly pro všechny komponenty včetně dialogů, karet a formulářů
+
+### Změněno
+- **Navigation komponenta**: Refaktorována do samostatné komponenty s podporou dark mode
+- **Tailwind konfigurace**: Přidána podpora class-based dark mode
+- **Konzistentní barvy**: Aktualizovány všechny barvy pro optimální kontrast v obou režimech
+- **Vylepšené UI**: Smooth přechody a hover efekty pro lepší uživatelskou zkušenost
+
+### Technické detaily
+- Implementace pomocí Tailwind CSS class-based dark mode
+- Automatické načítání uložených preferencí při spuštění aplikace
+- Dynamické přepínání CSS tříd na document.documentElement
+- Zachování funkcionality všech existujících komponent
+
 ## [Verze 0.3.1] - 2025-05-23
 
 ### Přidáno
