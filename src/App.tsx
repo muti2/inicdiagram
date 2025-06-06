@@ -1252,8 +1252,8 @@ function App() {
                )}
               {validationResults && (
                 <>
-                  <div className={`p-4 rounded-lg mb-6 border text-sm ${validationResults.valid ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' : 'border-amber-400 dark:border-amber-600 bg-amber-50 dark:bg-amber-900/20 text-amber-900 dark:text-amber-300'}`}>
-                    <p className={`font-semibold text-lg mb-2 ${validationResults.valid ? 'text-green-700 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>{validationResults.valid ? '✅ Data jsou validní' : '⚠️ Validace s výhradami'}</p>
+                  <div className={`p-4 rounded-lg mb-6 border text-sm ${validationResults.valid ? 'border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-300' : 'border-orange-400 dark:border-orange-600 bg-orange-50 dark:bg-orange-900/20 text-orange-900 dark:text-orange-200'}`}>
+                    <p className={`font-semibold text-lg mb-2 ${validationResults.valid ? 'text-green-700 dark:text-green-400' : 'text-orange-700 dark:text-orange-300'}`}>{validationResults.valid ? '✅ Data jsou validní' : '⚠️ Validace s výhradami'}</p>
                     {validationResults.messages.length > 0 && ( <ul className="space-y-1 list-disc list-inside pl-1"> {validationResults.messages.map((msg, i) => (<li key={i}>{msg}</li>))} </ul> )}
                     {!validationResults.valid && (
                         <div className="mt-4 pt-3 border-t border-opacity-60 ${validationResults.valid ? 'border-green-200' : 'border-amber-300'}">
@@ -1287,17 +1287,17 @@ function App() {
               {data && (
                 <>
                   {/* Repair Section */}
-                  <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-                    <h3 className="text-lg font-semibold mb-3 text-gray-700">Automatické opravy</h3>
-                    {repairResults && ( <div className={`mb-4 p-3 rounded-lg text-sm ${repairResults.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}> <p className="font-medium">{repairResults.message}</p> </div> )}
-                    {errorMessage && !repairResults && ( <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200 text-sm"> <p className="font-semibold">Chyba při opravě:</p> <p className="mt-1">{errorMessage}</p> </div> )}
-                    <p className="text-sm text-gray-600 mb-3"> Vyberte problémy k automatické opravě: </p>
+                  <div className="mb-6 p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm">
+                    <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Automatické opravy</h3>
+                    {repairResults && ( <div className={`mb-4 p-3 rounded-lg text-sm ${repairResults.success ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-700' : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-700'}`}> <p className="font-medium">{repairResults.message}</p> </div> )}
+                    {errorMessage && !repairResults && ( <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-700 text-sm"> <p className="font-semibold">Chyba při opravě:</p> <p className="mt-1">{errorMessage}</p> </div> )}
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3"> Vyberte problémy k automatické opravě: </p>
                     <div className="mb-4 space-y-2">
                       <div className="flex items-center"> 
   <input 
     type="checkbox" 
     id="fix-missing" 
-    className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+    className="mr-2 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:bg-gray-700" 
     checked={fixMissing} 
     onChange={(e) => {
       if (e.target.checked && interpolationCheck && !interpolationCheck.canInterpolate) {
@@ -1308,55 +1308,55 @@ function App() {
     }}
     disabled={isRepairing || Boolean(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || Boolean(interpolationCheck && !interpolationCheck.canInterpolate)}
   />
-  <label htmlFor="fix-missing" className={`text-sm ${(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || (interpolationCheck && !interpolationCheck.canInterpolate) ? 'text-gray-400' : 'text-gray-700'}`}>
+  <label htmlFor="fix-missing" className={`text-sm ${(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) || (interpolationCheck && !interpolationCheck.canInterpolate) ? 'text-gray-400 dark:text-gray-500' : 'text-gray-700 dark:text-gray-200'}`}>
     Doplnit chybějící záznamy (interpolací)
     {(validationResults?.stats.differentYears && validationResults.stats.differentYears > 1) ?
-      <span className="ml-2 text-amber-600 italic text-xs">Pro data z více let nelze použít</span>
+      <span className="ml-2 text-orange-600 dark:text-orange-400 italic text-xs">Pro data z více let nelze použít</span>
       : interpolationCheck && !interpolationCheck.canInterpolate ?
-        <span className="ml-2 text-amber-600 italic text-xs">{interpolationCheck.reason}</span>
-        : <div className="ml-2 text-xs text-gray-500 mt-1">
+        <span className="ml-2 text-orange-600 dark:text-orange-400 italic text-xs">{interpolationCheck.reason}</span>
+        : <div className="ml-2 text-xs text-gray-500 dark:text-gray-400 mt-1">
             <div>Požadavky: alespoň 10% pokrytí dat, max. 7 dní mezera, min. 6 měsíců pro roční data</div>
           </div>
     }
   </label>
 </div>
-                      <div className="flex items-center"> <input type="checkbox" id="fix-duplicate" className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked={fixDuplicate} onChange={(e) => setFixDuplicate(e.target.checked)} disabled={isRepairing} /> <label htmlFor="fix-duplicate" className="text-sm text-gray-700">Odstranit duplicitní čas. značky (ponechat první)</label> </div>
-                      <div className="flex items-center"> <input type="checkbox" id="fix-extreme" className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked={fixExtreme} onChange={(e) => setFixExtreme(e.target.checked)} disabled={isRepairing} /> <label htmlFor="fix-extreme" className="text-sm text-gray-700">Opravit extrémní hodnoty (nahradit průměrem)</label> </div>
+                      <div className="flex items-center"> <input type="checkbox" id="fix-duplicate" className="mr-2 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:bg-gray-700" checked={fixDuplicate} onChange={(e) => setFixDuplicate(e.target.checked)} disabled={isRepairing} /> <label htmlFor="fix-duplicate" className="text-sm text-gray-700 dark:text-gray-200">Odstranit duplicitní čas. značky (ponechat první)</label> </div>
+                      <div className="flex items-center"> <input type="checkbox" id="fix-extreme" className="mr-2 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:bg-gray-700" checked={fixExtreme} onChange={(e) => setFixExtreme(e.target.checked)} disabled={isRepairing} /> <label htmlFor="fix-extreme" className="text-sm text-gray-700 dark:text-gray-200">Opravit extrémní hodnoty (nahradit průměrem)</label> </div>
                     </div>
                     <div className="flex flex-wrap gap-3">
                       <button className={`px-5 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 text-sm font-medium disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`} onClick={applyRepairs} disabled={isRepairing || (!fixMissing && !fixDuplicate && !fixExtreme)}> {isRepairing ? (<><svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Probíhá oprava...</>) : 'Aplikovat opravy'} </button>
-                      <button className="px-5 py-2 border border-gray-300 text-gray-700 rounded-md shadow-sm hover:bg-gray-50 text-sm font-medium disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={validateData} disabled={isRepairing}> Validovat data znovu </button>
+                      <button className="px-5 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 text-sm font-medium disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={validateData} disabled={isRepairing}> Validovat data znovu </button>
                     </div>
                   </div>
                   
                   {/* Export Section */}
                   {dataChanged && (
-                    <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-                      <h3 className="text-lg font-semibold mb-3 text-gray-700">Export upravených dat</h3>
+                    <div className="mb-6 p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm">
+                      <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Export upravených dat</h3>
                       
                       {exportMessage && (
-                        <div className={`mb-4 p-3 rounded-lg text-sm ${exportMessage.includes('Chyba') ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
+                        <div className={`mb-4 p-3 rounded-lg text-sm ${exportMessage.includes('Chyba') ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700' : 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700'}`}>
                           {exportMessage}
                         </div>
                       )}
                       
                       <div className="flex items-center gap-3 mb-3">
-                        <label className="text-sm text-gray-700 font-medium">Format:</label>
-                        <div className="flex rounded-md overflow-hidden border border-gray-300">
+                        <label className="text-sm text-gray-700 dark:text-gray-200 font-medium">Format:</label>
+                        <div className="flex rounded-md overflow-hidden border border-gray-300 dark:border-gray-600">
                           <button 
-                            className={`px-3 py-1 text-sm ${exportFormat === 'csv' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+                            className={`px-3 py-1 text-sm ${exportFormat === 'csv' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-500'}`}
                             onClick={() => setExportFormat('csv')}
                           >
                             CSV
                           </button>
                           <button 
-                            className={`px-3 py-1 text-sm border-l border-gray-300 ${exportFormat === 'json' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+                            className={`px-3 py-1 text-sm border-l border-gray-300 dark:border-gray-600 ${exportFormat === 'json' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-500'}`}
                             onClick={() => setExportFormat('json')}
                           >
                             JSON
                           </button>
                           <button 
-                            className={`px-3 py-1 text-sm border-l border-gray-300 ${exportFormat === 'xlsx' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+                            className={`px-3 py-1 text-sm border-l border-gray-300 dark:border-gray-600 ${exportFormat === 'xlsx' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-500'}`}
                             onClick={() => setExportFormat('xlsx')}
                           >
                             XLSX
@@ -1393,48 +1393,48 @@ function App() {
                   </div>
 
                   {/* Data Table */}
-                  <div className="overflow-x-auto border border-gray-200 rounded-lg shadow-sm mb-4">
-                    <table className="min-w-full bg-white divide-y divide-gray-200">
-                      <thead className="bg-gray-50"> <tr> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">ID</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Časová značka</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Hodnota</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Jednotka</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Akce</th> </tr> </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                  <div className="overflow-x-auto border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm mb-4">
+                    <table className="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                      <thead className="bg-gray-50 dark:bg-gray-700"> <tr> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Časová značka</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Hodnota</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jednotka</th> <th className="py-2 px-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Akce</th> </tr> </thead>
+                      <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
                         {getCurrentPageData().length > 0 ? ( 
                           getCurrentPageData().map((row) => ( 
-                            <tr key={row.id} className="hover:bg-gray-50 transition-colors"> 
+                            <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"> 
                               {editingRow === row.id ? (
                                 <>
-                                  <td className="py-2 px-4 text-sm text-gray-700 whitespace-nowrap">{row.id}</td>
-                                  <td className="py-2 px-4 text-sm text-gray-700">
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200 whitespace-nowrap">{row.id}</td>
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
                                     <input
                                       type="text"
                                       name="timestamp"
                                       value={editFormData.timestamp}
                                       onChange={handleEditFormChange}
-                                      className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                                      className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm w-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
                                       form="editRowForm"
                                     />
                                   </td>
-                                  <td className="py-2 px-4 text-sm text-gray-700">
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
                                     <input
                                       type="number"
                                       name="value"
                                       value={editFormData.value}
                                       onChange={handleEditFormChange}
-                                      className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                                      className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm w-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
                                       step="0.01"
                                       form="editRowForm"
                                     />
                                   </td>
-                                  <td className="py-2 px-4 text-sm text-gray-700">
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
                                     <input
                                       type="text"
                                       name="unit"
                                       value={editFormData.unit}
                                       onChange={handleEditFormChange}
-                                      className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                                      className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm w-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
                                       form="editRowForm"
                                     />
                                   </td>
-                                  <td className="py-2 px-4 text-sm text-gray-700">
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
                                     <form id="editRowForm" onSubmit={handleEditFormSubmit} className="flex space-x-1">
                                       <button type="submit" className="bg-green-500 text-white px-2 py-1 rounded text-xs">
                                         Uložit
@@ -1447,15 +1447,15 @@ function App() {
                                 </>
                               ) : (
                                 <>
-                                  <td className="py-2 px-4 text-sm text-gray-700 whitespace-nowrap">{row.id}</td>
-                                  <td className="py-2 px-4 text-sm text-gray-700 whitespace-nowrap">{formatReadableDate(row.timestamp)}</td>
-                                  <td className="py-2 px-4 text-sm text-gray-700 whitespace-nowrap">{row.value === null ? <span className="text-red-500 italic">Chybí</span> : row.value}</td>
-                                  <td className="py-2 px-4 text-sm text-gray-700 whitespace-nowrap">{row.unit}</td>
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200 whitespace-nowrap">{row.id}</td>
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200 whitespace-nowrap">{formatReadableDate(row.timestamp)}</td>
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200 whitespace-nowrap">{row.value === null ? <span className="text-red-500 dark:text-red-400 italic">Chybí</span> : row.value}</td>
+                                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200 whitespace-nowrap">{row.unit}</td>
                                   <td className="py-2 px-4 text-sm whitespace-nowrap">
                                     <div className="flex space-x-2">
                                       <button 
                                         onClick={() => handleEditClick(row)} 
-                                        className="text-blue-600 hover:text-blue-800"
+                                        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
                                         title="Upravit záznam"
                                       >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1468,7 +1468,7 @@ function App() {
                                             handleDeleteClick(row.id);
                                           }
                                         }} 
-                                        className="text-red-600 hover:text-red-800"
+                                        className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
                                         title="Smazat záznam"
                                       >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1483,7 +1483,7 @@ function App() {
                           )) 
                         ) : ( 
                           <tr> 
-                            <td colSpan={5} className="py-6 px-4 text-center text-gray-500 italic"> 
+                            <td colSpan={5} className="py-6 px-4 text-center text-gray-500 dark:text-gray-400 italic"> 
                               {filteredData.length === 0 && data.length > 0 ? 'Žádná data neodpovídají filtrům.' : 'Žádná data k zobrazení.'} 
                             </td> 
                           </tr> 
@@ -1494,9 +1494,9 @@ function App() {
 
                   {/* Pagination */}
                   {filteredData.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm text-gray-600">
+                        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
                             <div> Zobrazuji {(currentPage - 1) * rowsPerPage + 1} - {Math.min(currentPage * rowsPerPage, filteredData.length)} z {filteredData.length} záznamů </div>
-                            <div className="flex items-center space-x-1"> <button className="px-2.5 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50" onClick={() => changePage(1)} disabled={currentPage === 1} title="První stránka">&laquo;</button> <button className="px-2.5 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} title="Předchozí stránka">&lsaquo;</button> <span className="px-3 py-1">Stránka {currentPage} / {getTotalPages()}</span> <button className="px-2.5 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50" onClick={() => changePage(currentPage + 1)} disabled={currentPage === getTotalPages()} title="Další stránka">&rsaquo;</button> <button className="px-2.5 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50" onClick={() => changePage(getTotalPages())} disabled={currentPage === getTotalPages()} title="Poslední stránka">&raquo;</button> </div>
+                            <div className="flex items-center space-x-1"> <button className="px-2.5 py-1 border border-gray-300 dark:border-gray-600 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200" onClick={() => changePage(1)} disabled={currentPage === 1} title="První stránka">&laquo;</button> <button className="px-2.5 py-1 border border-gray-300 dark:border-gray-600 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} title="Předchozí stránka">&lsaquo;</button> <span className="px-3 py-1">Stránka {currentPage} / {getTotalPages()}</span> <button className="px-2.5 py-1 border border-gray-300 dark:border-gray-600 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200" onClick={() => changePage(currentPage + 1)} disabled={currentPage === getTotalPages()} title="Další stránka">&rsaquo;</button> <button className="px-2.5 py-1 border border-gray-300 dark:border-gray-600 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200" onClick={() => changePage(getTotalPages())} disabled={currentPage === getTotalPages()} title="Poslední stránka">&raquo;</button> </div>
                             <div className="flex items-center"> <label htmlFor="rows-per-page" className="mr-2">Řádků:</label> <select id="rows-per-page" className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" value={rowsPerPage} onChange={(e) => { setRowsPerPage(Number(e.target.value)); setCurrentPage(1); }}> <option value={10}>10</option> <option value={25}>25</option> <option value={50}>50</option> <option value={100}>100</option> <option value={500}>500</option> </select> </div>
                         </div>
                   )}
@@ -1538,24 +1538,24 @@ function App() {
                   const unit = validData[0]?.unit || '';
                   return (
                     <>
-                        <h3 className="text-lg font-semibold mb-3 text-gray-700">Základní statistiky:</h3>
+                        <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-200">Základní statistiky:</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Celkový objem</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{sum.toFixed(2)} {unit}</p> </div>
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Minimální hodnota</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{min.toFixed(2)} {unit}</p> </div>
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Maximální hodnota</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{max.toFixed(2)} {unit}</p> </div>
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Průměrná hodnota</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{mean.toFixed(2)} {unit}</p> </div>
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Medián hodnot</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{median.toFixed(2)} {unit}</p> </div>
-                             <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm"> <p className="text-sm font-medium text-gray-600">Směrodatná odchylka</p> <p className="text-2xl font-semibold text-gray-800 mt-1">{stdDev.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Celkový objem</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{sum.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Minimální hodnota</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{min.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Maximální hodnota</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{max.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Průměrná hodnota</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{mean.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Medián hodnot</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{median.toFixed(2)} {unit}</p> </div>
+                             <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm"> <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Směrodatná odchylka</p> <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{stdDev.toFixed(2)} {unit}</p> </div>
                         </div>
-                         <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-                            <h3 className="font-medium text-lg mb-2 text-gray-700">Časové rozmezí dat</h3>
-                            <p className="text-sm text-gray-600"> Analyzovaná data pokrývají období od <span className="font-semibold">{formatReadableDate(firstTimestamp.toISOString())}</span> do <span className="font-semibold">{formatReadableDate(lastTimestamp.toISOString())}</span>. </p>
-                             <p className="text-sm text-gray-600 mt-1">Počet platných záznamů pro analýzu: {validData.length}</p>
+                         <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-sm">
+                            <h3 className="font-medium text-lg mb-2 text-gray-700 dark:text-gray-200">Časové rozmezí dat</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300"> Analyzovaná data pokrývají období od <span className="font-semibold">{formatReadableDate(firstTimestamp.toISOString())}</span> do <span className="font-semibold">{formatReadableDate(lastTimestamp.toISOString())}</span>. </p>
+                             <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Počet platných záznamů pro analýzu: {validData.length}</p>
                         </div>
                     </>
                   );
               })()}
-               {data && data.length === 0 && <div className="text-center text-gray-500 py-10 px-4 border border-dashed rounded-lg">Data jsou prázdná.</div>}
+               {data && data.length === 0 && <div className="text-center text-gray-500 dark:text-gray-400 py-10 px-4 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg">Data jsou prázdná.</div>}
             </div>
           )}
 

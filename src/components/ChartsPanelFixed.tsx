@@ -120,8 +120,8 @@ const ChartsPanel: React.FC<ChartsPanelProps> = ({ data }) => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
-          <p className="font-medium text-gray-700">{formatTooltipDate(new Date(payload[0].payload.time))}</p>
+        <div className="bg-white dark:bg-gray-800 p-3 border border-gray-200 dark:border-gray-600 shadow-md rounded-md">
+          <p className="font-medium text-gray-700 dark:text-gray-200">{formatTooltipDate(new Date(payload[0].payload.time))}</p>
           <p className="text-blue-600">
             Hodnota: <span className="font-semibold">{payload[0].value.toFixed(2)}</span> {payload[0].payload.unit}
           </p>
@@ -141,7 +141,7 @@ const ChartsPanel: React.FC<ChartsPanelProps> = ({ data }) => {
   const renderChart = () => {
     if (chartData.length === 0) {
       return (
-        <div className="text-center py-10 text-gray-500">
+        <div className="text-center py-10 text-gray-500 dark:text-gray-400">
           Nejsou k dispozici žádná platná data pro vykreslení grafu.
         </div>
       );
@@ -243,8 +243,8 @@ const ChartsPanel: React.FC<ChartsPanelProps> = ({ data }) => {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <div>
-          <h3 className="text-lg font-medium mb-2">Vizualizace dat</h3>
-          <p className="text-sm text-gray-600">
+          <h3 className="text-lg font-medium mb-2 dark:text-white">Vizualizace dat</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
             {chartData.length > 0 
               ? `Zobrazeno ${chartData.length} záznamů.` 
               : 'Žádná data k zobrazení.'}
@@ -252,48 +252,48 @@ const ChartsPanel: React.FC<ChartsPanelProps> = ({ data }) => {
         </div>
         
         <div className="flex flex-wrap gap-2">
-          <div className="flex items-center rounded-md overflow-hidden border border-gray-300">
+          <div className="flex items-center rounded-md overflow-hidden border border-gray-300 dark:border-gray-600">
             <button 
-              className={`px-3 py-1.5 text-sm ${chartType === 'line' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm ${chartType === 'line' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setChartType('line')}
             >
               Čárový
             </button>
             <button 
-              className={`px-3 py-1.5 text-sm border-l border-gray-300 ${chartType === 'bar' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm border-l border-gray-300 dark:border-gray-600 ${chartType === 'bar' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setChartType('bar')}
             >
               Sloupcový
             </button>
             <button 
-              className={`px-3 py-1.5 text-sm border-l border-gray-300 ${chartType === 'scatter' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm border-l border-gray-300 dark:border-gray-600 ${chartType === 'scatter' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setChartType('scatter')}
             >
               Bodový
             </button>
           </div>
           
-          <div className="flex items-center rounded-md overflow-hidden border border-gray-300 ml-2">
+          <div className="flex items-center rounded-md overflow-hidden border border-gray-300 dark:border-gray-600 ml-2">
             <button 
-              className={`px-3 py-1.5 text-sm ${timeRange === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm ${timeRange === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setTimeRange('all')}
             >
               Vše
             </button>
             <button 
-              className={`px-3 py-1.5 text-sm border-l border-gray-300 ${timeRange === 'month' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm border-l border-gray-300 dark:border-gray-600 ${timeRange === 'month' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setTimeRange('month')}
             >
               Měsíc
             </button>
             <button 
-              className={`px-3 py-1.5 text-sm border-l border-gray-300 ${timeRange === 'week' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm border-l border-gray-300 dark:border-gray-600 ${timeRange === 'week' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setTimeRange('week')}
             >
               Týden
             </button>
             <button 
-              className={`px-3 py-1.5 text-sm border-l border-gray-300 ${timeRange === 'day' ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+              className={`px-3 py-1.5 text-sm border-l border-gray-300 dark:border-gray-600 ${timeRange === 'day' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
               onClick={() => setTimeRange('day')}
             >
               Den
@@ -304,27 +304,27 @@ const ChartsPanel: React.FC<ChartsPanelProps> = ({ data }) => {
       
       {chartData.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-            <p className="text-sm font-medium text-gray-600">Minimální hodnota</p>
-            <p className="text-xl font-semibold text-gray-800 mt-1">{stats.min.toFixed(2)} {chartData[0]?.unit}</p>
+          <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Minimální hodnota</p>
+            <p className="text-xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{stats.min.toFixed(2)} {chartData[0]?.unit}</p>
           </div>
-          <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-            <p className="text-sm font-medium text-gray-600">Průměrná hodnota</p>
-            <p className="text-xl font-semibold text-gray-800 mt-1">{stats.avg.toFixed(2)} {chartData[0]?.unit}</p>
+          <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Průměrná hodnota</p>
+            <p className="text-xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{stats.avg.toFixed(2)} {chartData[0]?.unit}</p>
           </div>
-          <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
-            <p className="text-sm font-medium text-gray-600">Maximální hodnota</p>
-            <p className="text-xl font-semibold text-gray-800 mt-1">{stats.max.toFixed(2)} {chartData[0]?.unit}</p>
+          <div className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Maximální hodnota</p>
+            <p className="text-xl font-semibold text-gray-800 dark:text-gray-100 mt-1">{stats.max.toFixed(2)} {chartData[0]?.unit}</p>
           </div>
         </div>
       )}
       
-      <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
+      <div className="bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm">
         {renderChart()}
       </div>
       
       {chartData.length > 0 && (
-        <div className="text-sm text-gray-500 italic">
+        <div className="text-sm text-gray-500 dark:text-gray-400 italic">
           <p>Tip: Použijte posuvník pod grafem pro zobrazení detailu vybraného časového úseku.</p>
         </div>
       )}
