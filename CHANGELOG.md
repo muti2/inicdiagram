@@ -15,11 +15,21 @@
 - **Konzistentní barvy**: Aktualizovány všechny barvy pro optimální kontrast v obou režimech
 - **Vylepšené UI**: Smooth přechody a hover efekty pro lepší uživatelskou zkušenost
 
+### Opraveno
+- **Kontrastní barvy**: Změna amber/žluté barvy na oranžovou pro lepší čitelnost v dark mode
+- **Dialog komponenty**: ConfirmDialog a všechny modální okna mají dark mode podporu
+- **Formulářové prvky**: Input pole, checkboxy a tlačítka s dark mode styly
+- **Datová tabulka**: Kompletní dark mode včetně hlavičky, řádků a paginace
+- **Statistické karty**: Všechny karty v sekcích Analýza a Validace
+- **Grafy a vizualizace**: Tooltips, legenda a ovládací prvky grafů
+- **Export komponenta**: Radio buttony a všechny interaktivní prvky
+
 ### Technické detaily
 - Implementace pomocí Tailwind CSS class-based dark mode
 - Automatické načítání uložených preferencí při spuštění aplikace
 - Dynamické přepínání CSS tříd na document.documentElement
 - Zachování funkcionality všech existujících komponent
+- Optimalizace barev pro přístupnost a čitelnost
 
 ## [Verze 0.3.1] - 2025-05-23
 
