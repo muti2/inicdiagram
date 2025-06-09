@@ -1,5 +1,28 @@
 # Changelog
 
+## [Verze 0.5.0] - Plánováno
+### Přidáno
+- **Firebase Authentication**: Kompletní autentifikační systém
+- **Uživatelské účty**: Registrace, přihlášení, správa profilů
+- **Protected Routes**: Zabezpečení aplikace pro přihlášené uživatele
+- **User Management**: Profily, nastavení, statistiky použití
+- **Cloud Storage**: Historie souborů a projektů v Firebase
+- **Google OAuth**: Přihlášení přes Google účet
+- **Avatar Upload**: Nahrávání profilových obrázků
+- **User Context**: Globální správa uživatelského stavu
+
+### Změněno
+- **Architektura aplikace**: Přechod na multi-user architekturu
+- **Data persistence**: Migrace z localStorage na Firebase Firestore
+- **Navigace**: Přidání user menu a auth ovládání
+- **Dark mode**: Integrace s uživatelskými preferencemi
+
+### Bezpečnost
+- **Firebase Security Rules**: Izolace dat mezi uživateli
+- **Token validation**: Ověřování autentifikačních tokenů
+- **Input sanitization**: Ochrana proti XSS útokům
+- **GDPR compliance**: Příprava na dodržování GDPR
+
 ## [Verze 0.4.0] - 2025-06-05
 
 ### Přidáno
