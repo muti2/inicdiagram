@@ -24,8 +24,8 @@ export const db = getFirestore(app);
 // Initialize Cloud Storage and get a reference to the service
 export const storage = getStorage(app);
 
-// Connect to emulators in development mode
-if (import.meta.env.DEV) {
+// Connect to emulators only if explicitly enabled
+if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true') {
   try {
     // Connect to Auth emulator
     if (!auth.emulatorConfig) {
