@@ -11,6 +11,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
+  const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { currentUser, userProfile, logout } = useAuth();
@@ -36,6 +37,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
         top: rect.bottom + 8,
         right: window.innerWidth - rect.right,
       });
+      
+      // Malý delay pro smooth animaci
+      setTimeout(() => setShowMenu(true), 10);
+    } else {
+      setShowMenu(false);
     }
   }, [isOpen]);
 
@@ -66,7 +72,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
     return createPortal(
       <div 
         ref={menuRef}
-        className="fixed w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[9999] transform origin-top-right transition-all duration-200"
+        className={`fixed w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[9999] transform origin-top-right transition-all duration-200 ease-out ${
+          showMenu ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}
         style={{
           top: menuPosition.top,
           right: menuPosition.right,
