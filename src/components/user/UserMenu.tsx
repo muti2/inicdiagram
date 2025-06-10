@@ -10,7 +10,7 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
+  const [menuPosition, setMenuPosition] = useState({ top: -9999, right: -9999 });
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { currentUser, userProfile, logout } = useAuth();
@@ -61,7 +61,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
     .slice(0, 2);
 
   const renderMenu = () => {
-    if (!isOpen) return null;
+    if (!isOpen || menuPosition.top < 0) return null;
 
     return createPortal(
       <div 
