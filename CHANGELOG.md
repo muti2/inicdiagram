@@ -1,27 +1,41 @@
 # Changelog
 
-## [Verze 0.5.0] - Plánováno
+## [Verze 0.5.0] - 2025-06-10 ✅ DOKONČENO
 ### Přidáno
-- **Firebase Authentication**: Kompletní autentifikační systém
-- **Uživatelské účty**: Registrace, přihlášení, správa profilů
-- **Protected Routes**: Zabezpečení aplikace pro přihlášené uživatele
-- **User Management**: Profily, nastavení, statistiky použití
-- **Cloud Storage**: Historie souborů a projektů v Firebase
-- **Google OAuth**: Přihlášení přes Google účet
-- **Avatar Upload**: Nahrávání profilových obrázků
-- **User Context**: Globální správa uživatelského stavu
+- **Firebase Authentication**: Kompletní autentifikační systém s Email/Password a Google OAuth
+- **Uživatelské účty**: Registrace, přihlášení, zapomenuté heslo
+- **Protected Routes**: Zabezpečení aplikace pouze pro přihlášené uživatele
+- **User Context**: Globální správa uživatelského stavu s React Context
+- **UserMenu**: Dropdown menu s profilem, nastavením a odhlášením
+- **React Router**: Kompletní routing s chráněnými routes
+- **Auth komponenty**: LoginForm, RegisterForm, ForgotPassword komponenty
+- **Firebase konfigurace**: Production-ready setup s inicdiagram projektem
 
 ### Změněno
-- **Architektura aplikace**: Přechod na multi-user architekturu
-- **Data persistence**: Migrace z localStorage na Firebase Firestore
-- **Navigace**: Přidání user menu a auth ovládání
-- **Dark mode**: Integrace s uživatelskými preferencemi
+- **Architektura aplikace**: Přechod na multi-user architekturu s autentifikací
+- **Navigace**: Přidání user menu a auth tlačítek (Přihlásit/Registrace)
+- **Dark mode**: Přesunut do UserMenu místo samostatného tlačítka
+- **Aplikační flow**: Nepřihlášení uživatelé vidí pouze auth stránky
+- **Main App**: Refaktorováno do komponenty s router wrapping
+
+### Opraveno
+- **UserMenu positioning**: Použití React Portal pro správné zobrazení
+- **Dark mode toggle**: Funkční přepínač v user menu
+- **Firebase emulators**: Vypnuty pro production použití
+- **Menu animace**: Odstraněny všechny animace pro okamžité zobrazení
+- **Blikání menu**: Eliminováno problikávání při prvním otevření
 
 ### Bezpečnost
-- **Firebase Security Rules**: Izolace dat mezi uživateli
-- **Token validation**: Ověřování autentifikačních tokenů
-- **Input sanitization**: Ochrana proti XSS útokům
-- **GDPR compliance**: Příprava na dodržování GDPR
+- **Protected Routes**: Aplikace přístupná pouze pro autentifikované uživatele
+- **Firebase Auth**: Bezpečná správa uživatelských účtů
+- **Token validation**: Automatické ověřování auth tokenů
+- **Route protection**: Redirect na login pro neautentifikované uživatele
+
+### Technické detaily
+- **React Router 7.6.2**: Moderní routing s protected routes
+- **Firebase Auth 10.x**: Nejnovější verze s emulator support
+- **TypeScript**: Plná typová bezpečnost pro auth komponenty
+- **Tailwind CSS**: Responzivní design pro všechny auth komponenty
 
 ## [Verze 0.4.0] - 2025-06-05
 
