@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
-const UserMenu: React.FC = () => {
+interface UserMenuProps {
+  darkMode: boolean;
+  setDarkMode: (dark: boolean) => void;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { currentUser, userProfile, logout } = useAuth();
@@ -72,7 +77,7 @@ const UserMenu: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+        <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50 transform origin-top-right transition-all duration-200">
           {/* User Info Header */}
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">
@@ -155,16 +160,15 @@ const UserMenu: React.FC = () => {
               <span className="text-sm text-gray-700 dark:text-gray-300">Tmavý režim</span>
               <button
                 onClick={() => {
-                  // Toggle dark mode - integrace s existing dark mode
-                  document.documentElement.classList.toggle('dark');
-                  const isDark = document.documentElement.classList.contains('dark');
-                  localStorage.setItem('darkMode', isDark.toString());
+                  setDarkMode(!darkMode);
                 }}
-                className="relative inline-flex items-center h-6 rounded-full w-11 bg-gray-300 dark:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  darkMode ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
               >
                 <span
                   className={`inline-block w-4 h-4 transform transition-transform bg-white rounded-full ${
-                    document.documentElement.classList.contains('dark') ? 'translate-x-6' : 'translate-x-1'
+                    darkMode ? 'translate-x-6' : 'translate-x-1'
                   }`}
                 />
               </button>

@@ -69,23 +69,23 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab, data, 
           </div>
         )}
         
-        {/* Right Side - Dark Mode Toggle + User Menu */}
+        {/* Right Side - User Menu or Auth Buttons */}
         <div className="flex items-center space-x-2">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            title={darkMode ? 'Přepnout na světlý režim' : 'Přepnout na tmavý režim'}
-          >
-            <span className="text-xl">
-              {darkMode ? '☀️' : '🌙'}
-            </span>
-          </button>
-
           {/* User Menu or Login Button */}
           {currentUser ? (
-            <UserMenu />
+            <UserMenu darkMode={darkMode} setDarkMode={setDarkMode} />
           ) : (
             <div className="flex items-center space-x-2">
+              {/* Dark mode toggle for non-authenticated users */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                title={darkMode ? 'Přepnout na světlý režim' : 'Přepnout na tmavý režim'}
+              >
+                <span className="text-xl">
+                  {darkMode ? '☀️' : '🌙'}
+                </span>
+              </button>
               <Link
                 to="/login"
                 className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
