@@ -1,5 +1,19 @@
 # Changelog
 
+## [Verze 0.5.1] - 2025-06-11 ✅ DOKONČENO
+### Opraveno
+- **Google profilové fotky**: Oprava načítání avatarů z Google OAuth
+- **Photo URL synchronizace**: AuthContext nyní synchronizuje photoURL mezi Firebase Auth a Firestore
+- **Error handling**: Přidáno error handling pro selhání načítání profilových obrázků
+- **Fallback mechanismus**: Vylepšené zobrazení iniciálů při selhání načítání fotek
+- **OAuth scopes**: Google provider nyní explicitně žádá o 'profile' a 'email' scopes
+- **Debug logging**: Přidány console logy pro lepší debugging profilových dat
+
+### Technické vylepšení
+- UserMenu používá `currentUser.photoURL` jako primární zdroj s fallback na `userProfile.photoURL`
+- Automatická synchronizace profilových dat při každém přihlášení
+- Robustní error handling s graceful fallback na iniciály
+
 ## [Verze 0.5.0] - 2025-06-10 ✅ DOKONČENO
 ### Přidáno
 - **Firebase Authentication**: Kompletní autentifikační systém s Email/Password a Google OAuth
