@@ -72,6 +72,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const { displayName, email, photoURL } = user;
       const createdAt = new Date();
       
+      // Log photo URL for debugging
+      console.log('Creating user profile with photoURL:', photoURL);
+      
       const defaultProfile: UserProfile = {
         uid: user.uid,
         email: email || '',
@@ -96,13 +99,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw error;
       }
     } else {
-      // Update last login time
-      await updateDoc(userRef, {
-        lastLoginAt: new Date(),
-      });
-      
+      // User exists, sync with Firebase Auth data
       const profileData = userSnap.data() as UserProfile;
-      setUserProfile(profileData);
+      let needsUpdate = false;
+      const updates: any = {
+        lastLoginAt: new Date(),
+      };
+
+      // Sync photoURL from Firebase Auth if different
+      if (user.photoURL && user.photoURL !== profileData.photoURL) {
+        updates.photoURL = user.photoURL;
+        needsUpdate = true;
+        console.log('Updating photoURL from Firebase Auth:', user.photoURL);
+      }
+
+      // Sync displayName from Firebase Auth if different  
+      if (user.displayName && user.displayName !== profileData.displayName) {
+        updates.displayName = user.displayName;
+        needsUpdate = true;
+      }
+
+      if (needsUpdate) {
+        await updateDoc(userRef, updates);
+        setUserProfile({ ...profileData, ...updates });
+      } else {
+        await updateDoc(userRef, { lastLoginAt: new Date() });
+        setUserProfile(profileData);
+      }
     }
   };
 
@@ -114,12 +137,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       if (userSnap.exists()) {
         const profileData = userSnap.data() as UserProfile;
-        setUserProfile(profileData);
         
-        // Update last login
-        await updateDoc(userRef, {
+        // Check if Firebase Auth has newer profile data (especially photoURL)
+        let needsUpdate = false;
+        const updates: any = {
           lastLoginAt: new Date(),
-        });
+        };
+
+        // Sync photoURL from Firebase Auth if different
+        if (user.photoURL && user.photoURL !== profileData.photoURL) {
+          updates.photoURL = user.photoURL;
+          needsUpdate = true;
+        }
+
+        // Sync displayName from Firebase Auth if different
+        if (user.displayName && user.displayName !== profileData.displayName) {
+          updates.displayName = user.displayName;
+          needsUpdate = true;
+        }
+
+        if (needsUpdate) {
+          await updateDoc(userRef, updates);
+          setUserProfile({ ...profileData, ...updates });
+        } else {
+          await updateDoc(userRef, { lastLoginAt: new Date() });
+          setUserProfile(profileData);
+        }
       }
     } catch (error) {
       console.error('Error loading user profile:', error);
@@ -139,7 +182,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const login = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = async () => {
@@ -153,7 +196,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    // Request additional scopes to ensure we get the profile photo
+    provider.addScope('profile');
+    provider.addScope('email');
+    
     const { user } = await signInWithPopup(auth, provider);
+    
+    // Log the user data for debugging
+    console.log('Google sign-in user data:', {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      providerData: user.providerData
+    });
+    
     await createUserProfile(user);
   };
 

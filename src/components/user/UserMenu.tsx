@@ -60,6 +60,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
     .toUpperCase()
     .slice(0, 2);
 
+  // Use Firebase Auth photoURL as primary source, Firestore as fallback
+  const photoURL = currentUser.photoURL || userProfile.photoURL;
+
   const renderMenu = () => {
     if (!isOpen || menuPosition.top < 0) return null;
 
@@ -75,17 +78,27 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
         {/* User Info Header */}
         <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center space-x-3">
-            {userProfile.photoURL ? (
+            {photoURL ? (
               <img
-                src={userProfile.photoURL}
+                src={photoURL}
                 alt={displayName}
                 className="w-10 h-10 rounded-full"
+                onError={(e) => {
+                  console.error('Profile photo failed to load:', photoURL);
+                  // Hide the img element and show fallback
+                  (e.target as HTMLImageElement).style.display = 'none';
+                  if ((e.target as HTMLImageElement).nextElementSibling) {
+                    ((e.target as HTMLImageElement).nextElementSibling as HTMLElement).style.display = 'flex';
+                  }
+                }}
               />
-            ) : (
-              <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-medium">
-                {initials}
-              </div>
-            )}
+            ) : null}
+            <div 
+              className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-medium"
+              style={{ display: photoURL ? 'none' : 'flex' }}
+            >
+              {initials}
+            </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                 {displayName}
@@ -194,17 +207,27 @@ const UserMenu: React.FC<UserMenuProps> = ({ darkMode, setDarkMode }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
       >
-        {userProfile.photoURL ? (
+        {photoURL ? (
           <img
-            src={userProfile.photoURL}
+            src={photoURL}
             alt={displayName}
             className="w-8 h-8 rounded-full"
+            onError={(e) => {
+              console.error('Button profile photo failed to load:', photoURL);
+              // Hide the img element and show fallback
+              (e.target as HTMLImageElement).style.display = 'none';
+              if ((e.target as HTMLImageElement).nextElementSibling) {
+                ((e.target as HTMLImageElement).nextElementSibling as HTMLElement).style.display = 'flex';
+              }
+            }}
           />
-        ) : (
-          <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-            {initials}
-          </div>
-        )}
+        ) : null}
+        <div 
+          className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium"
+          style={{ display: photoURL ? 'none' : 'flex' }}
+        >
+          {initials}
+        </div>
         <span className="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300">
           {displayName}
         </span>
