@@ -1,5 +1,56 @@
 # Changelog
 
+## [Verze 0.5.1] - 2025-06-11 ✅ DOKONČENO
+### Opraveno
+- **Google profilové fotky**: Oprava načítání avatarů z Google OAuth
+- **Photo URL synchronizace**: AuthContext nyní synchronizuje photoURL mezi Firebase Auth a Firestore
+- **Error handling**: Přidáno error handling pro selhání načítání profilových obrázků
+- **Fallback mechanismus**: Vylepšené zobrazení iniciálů při selhání načítání fotek
+- **OAuth scopes**: Google provider nyní explicitně žádá o 'profile' a 'email' scopes
+- **Debug logging**: Přidány console logy pro lepší debugging profilových dat
+
+### Technické vylepšení
+- UserMenu používá `currentUser.photoURL` jako primární zdroj s fallback na `userProfile.photoURL`
+- Automatická synchronizace profilových dat při každém přihlášení
+- Robustní error handling s graceful fallback na iniciály
+
+## [Verze 0.5.0] - 2025-06-10 ✅ DOKONČENO
+### Přidáno
+- **Firebase Authentication**: Kompletní autentifikační systém s Email/Password a Google OAuth
+- **Uživatelské účty**: Registrace, přihlášení, zapomenuté heslo
+- **Protected Routes**: Zabezpečení aplikace pouze pro přihlášené uživatele
+- **User Context**: Globální správa uživatelského stavu s React Context
+- **UserMenu**: Dropdown menu s profilem, nastavením a odhlášením
+- **React Router**: Kompletní routing s chráněnými routes
+- **Auth komponenty**: LoginForm, RegisterForm, ForgotPassword komponenty
+- **Firebase konfigurace**: Production-ready setup s inicdiagram projektem
+
+### Změněno
+- **Architektura aplikace**: Přechod na multi-user architekturu s autentifikací
+- **Navigace**: Přidání user menu a auth tlačítek (Přihlásit/Registrace)
+- **Dark mode**: Přesunut do UserMenu místo samostatného tlačítka
+- **Aplikační flow**: Nepřihlášení uživatelé vidí pouze auth stránky
+- **Main App**: Refaktorováno do komponenty s router wrapping
+
+### Opraveno
+- **UserMenu positioning**: Použití React Portal pro správné zobrazení
+- **Dark mode toggle**: Funkční přepínač v user menu
+- **Firebase emulators**: Vypnuty pro production použití
+- **Menu animace**: Odstraněny všechny animace pro okamžité zobrazení
+- **Blikání menu**: Eliminováno problikávání při prvním otevření
+
+### Bezpečnost
+- **Protected Routes**: Aplikace přístupná pouze pro autentifikované uživatele
+- **Firebase Auth**: Bezpečná správa uživatelských účtů
+- **Token validation**: Automatické ověřování auth tokenů
+- **Route protection**: Redirect na login pro neautentifikované uživatele
+
+### Technické detaily
+- **React Router 7.6.2**: Moderní routing s protected routes
+- **Firebase Auth 10.x**: Nejnovější verze s emulator support
+- **TypeScript**: Plná typová bezpečnost pro auth komponenty
+- **Tailwind CSS**: Responzivní design pro všechny auth komponenty
+
 ## [Verze 0.4.0] - 2025-06-05
 
 ### Přidáno

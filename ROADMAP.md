@@ -93,7 +93,7 @@ Tento dokument shrnuje plánovaný vývoj aplikace Validátor dat o energetické
 - Porovnání vzoru diagramu s aktuálními daty
 - **Generování nového diagramu na další rok**: Ze vstupních n souborů iniciálních diagramů vytvoř nový diagram na následující rok
 
-## Aktuální stav implementace (verze 0.3.0)
+## Aktuální stav implementace (verze 0.5.0) ✅ DOKONČENO
 
 ### ✅ Dokončené funkce
 - **Základní grafy**: Čárový, sloupcový a bodový graf s interaktivními prvky
@@ -104,33 +104,68 @@ Tento dokument shrnuje plánovaný vývoj aplikace Validátor dat o energetické
 - **Řádková editace**: Inline editace s filtrováním a stránkováním
 - **Export dat**: CSV, XLSX, JSON formáty s automatickými názvy
 - **Bezpečné limity interpolace**: Implementovány inteligentní kontroly před interpolací
+- **Dark Mode**: Kompletní tmavý režim s persistentním nastavením
+- **🔐 Firebase Authentication**: Email/Password + Google OAuth
+- **👤 Uživatelské účty**: Registrace, přihlášení, správa profilem
+- **🛡️ Protected Routes**: Aplikace zabezpečená pouze pro autentifikované uživatele
+- **📱 User Context**: Globální správa stavu uživatele
+- **🎯 UserMenu**: Dropdown s profilem, nastavením, dark mode toggle
+- **🔄 React Router**: Kompletní routing s auth flow
 
 ### 🔄 Částečně implementované
 - **XML parser**: Základní funkcionalita, potřebuje rozšíření
 
-## Prioritní oblasti pro nadcházející verzi (0.4.0)
+## Prioritní oblasti pro nadcházející verzi (0.6.0) - Pokročilé funkce
+
+1. **📊 Pokročilé vizualizace**
+   - Teplotní mapa (heatmap) týdenní spotřeby
+   - Export grafů do PNG/PDF formátu
+   - Agregační pohledy (denní/týdenní/měsíční průměry)
+   - Srovnávací grafy mezi obdobími
+
+2. **📁 User Data Management**
+   - Historie nahraných souborů s metadaty
+   - Uložené projekty a analýzy v Firebase Storage
+   - Historie exportů s možností opětovného stažení
+   - Cloud backup uživatelských dat
+
+3. **👤 Pokročilé uživatelské funkce**
+   - User Profile stránka s editací údajů
+   - Avatar upload a správa profilového obrázku
+   - User Settings s preferencemi aplikace
+   - Statistiky použití (nahraných souborů, zpracovaných záznamů)
+
+4. **🚀 UX vylepšení**
+   - Drag & Drop nahrávání souborů
+   - Vylepšení zpětné vazby při zpracování velkých souborů
+   - Pokročilé filtrování a vyhledávání v historii
+   - Offline mode s synchronizací
+
+5. **🔒 Rozšířená bezpečnost**
+   - Firebase Security Rules pro data isolation
+   - User-specific data storage v Firestore
+   - GDPR compliance implementace
+   - Audit logging uživatelských aktivit
+
+## Následující prioritní oblasti (0.6.0)
 
 1. **Rozšíření grafů**
    - Teplotní mapa týdenní spotřeby
    - Export grafů do PNG/PDF
    - Agregační pohledy (denní/týdenní/měsíční průměry)
 
-2. **Rozšíření grafů**
-   - Teplotní mapa týdenní spotřeby
-   - Export grafů do PNG/PDF
-   - Agregační pohledy (denní/týdenní/měsíční průměry)
+2. **Pokročilé uživatelské funkce**
+   - Team collaboration a shared projects
+   - API key management pro external integrations
+   - Advanced user statistics a analytics
+   - Subscription management příprava
 
-3. **Specifické funkce dle přání zákazníka**
-   - Funkce pro detekci a respektování závodní dovolené
-   - Úprava diagramu s ohledem na specifické dny (víkendy, svátky)
-   - Možnost spojení a oddělení diagramů
-
-4. **Import/Export vylepšení**
+3. **Import/Export vylepšení**
    - Čištění dat od CTRL+C/CTRL+V artefaktů
    - API pro předávání dat do externích systémů
    - Export vybraných řádků nebo sloupců
 
-5. **Uživatelské rozhraní**
+4. **Drag and drop a UX**
    - Vylepšení zpětné vazby při nahrávání a zpracování velkých souborů
    - Drag and drop nahrávání
    - Zvýraznění upravených řádků
